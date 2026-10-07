@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ig6500.github.io/Aqua_Illa/sitemap.xml
+Sitemap: https://www.aquailla.hu/sitemap.xml
