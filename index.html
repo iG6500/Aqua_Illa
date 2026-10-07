@@ -702,18 +702,55 @@
 
   </main>
 
-  <footer style="border-top: 1px solid var(--border); padding: 44px 24px;">
-    <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px;">
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <img src="{{ logoLockup }}" alt="Aqua Illa" style="height: 24px; width: auto; display: block;">
-        <div style="font-size: 13px; color: var(--muted); border-left: 1px solid var(--border); padding-left: 12px;">Illa Italia Kft. — Baja</div>
+  <footer style="position: relative; margin-top: 40px; background: var(--surface); border-top: 1px solid var(--border); overflow: hidden;">
+    <svg sc-camel-view-box="0 0 1200 24" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 24px; opacity: 0.5;">
+      <path d="M0 12 C100 0 200 24 300 12 S500 0 600 12 S800 24 900 12 S1100 0 1200 12" fill="none" stroke="#5B9CFF" stroke-width="1.5" stroke-dasharray="6 7" style="animation: flowDash 2.4s linear infinite;"></path>
+    </svg>
+    <svg sc-camel-view-box="0 0 400 400" style="position: absolute; right: -120px; top: -60px; width: 460px; height: 460px; opacity: 0.35; pointer-events: none;">
+      <circle cx="200" cy="200" r="60" fill="none" stroke="rgba(91,156,255,0.3)" stroke-width="1.2"></circle>
+      <circle cx="200" cy="200" r="120" fill="none" stroke="rgba(91,156,255,0.22)" stroke-width="1.2" stroke-dasharray="4 5"></circle>
+      <circle cx="200" cy="200" r="185" fill="none" stroke="rgba(91,156,255,0.14)" stroke-width="1.2" stroke-dasharray="4 5"></circle>
+    </svg>
+
+    <div style="position: relative; max-width: 1160px; margin: 0 auto; padding: 72px 24px 0;">
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px; padding-bottom: 56px; border-bottom: 1px solid var(--border);">
+        <div style="max-width: 620px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; margin-bottom: 14px;"><span style="color: var(--accent);">●</span> Kezdjük el</div>
+          <div style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 4vw, 2.9rem); line-height: 1.08; letter-spacing: -0.01em;">A jó medence a felszín alatt dől el.</div>
+        </div>
+        <a href="#configurator" style="background: var(--accent); color: #0B0B0C; text-decoration: none; font-weight: 700; font-size: 15px; padding: 15px 28px; border-radius: 999px; box-shadow: 0 0 30px rgba(91,156,255,0.3); white-space: nowrap;" style-hover="background:var(--accent-strong);transform:translateY(-1px)">Ajánlatot kérek →</a>
       </div>
-      <div style="text-align: right; font-size: 13.5px; color: var(--muted);">
-        <div>illaitalia2021@gmail.com</div>
-        <div>+36 30 844 2694</div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 40px 32px; padding: 52px 0;">
+        <div>
+          <img src="{{ logoLockup }}" alt="Aqua Illa" style="height: 30px; width: auto; display: block; margin-bottom: 18px;">
+          <div style="font-size: 14px; line-height: 1.65; color: var(--muted); max-width: 280px;">Medencegépészet és kivitelezés Baján és 100 km-es környékén — felméréstől az átadásig.</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px;">Az oldalon</div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <a href="#why" style="color: var(--ink); text-decoration: none; font-size: 14px; line-height: 1.4;" style-hover="color:var(--accent)">Miért a gépészet</a>
+            <a href="#folyamat" style="color: var(--ink); text-decoration: none; font-size: 14px; line-height: 1.4;" style-hover="color:var(--accent)">Folyamat</a>
+            <a href="#referenciak" style="color: var(--ink); text-decoration: none; font-size: 14px; line-height: 1.4;" style-hover="color:var(--accent)">Referenciák</a>
+            <a href="#configurator" style="color: var(--ink); text-decoration: none; font-size: 14px; line-height: 1.4;" style-hover="color:var(--accent)">Gépészeti konfigurátor</a>
+            <a href="#faq" style="color: var(--ink); text-decoration: none; font-size: 14px; line-height: 1.4;" style-hover="color:var(--accent)">Gyakori kérdések</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px;">Kapcsolat</div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 34px; height: 34px; border-radius: 50%; background: rgba(91,156,255,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="#5B9CFF" stroke-width="1.6"></path></svg></span><a href="tel:+36308442694" style="color: var(--ink); text-decoration: none; font-size: 14px; line-height: 1.4;" style-hover="color:var(--accent)">+36 30 844 2694</a></div>
+            <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 34px; height: 34px; border-radius: 50%; background: rgba(91,156,255,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="#5B9CFF" stroke-width="1.6"></path><path d="M4 6l8 7 8-7" stroke="#5B9CFF" stroke-width="1.6"></path></svg></span><a href="mailto:illaitalia2021@gmail.com" style="color: var(--ink); text-decoration: none; font-size: 14px; line-height: 1.4;" style-hover="color:var(--accent)">illaitalia2021@gmail.com</a></div>
+            <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 34px; height: 34px; border-radius: 50%; background: rgba(91,156,255,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" stroke="#5B9CFF" stroke-width="1.6"></path><circle cx="12" cy="10" r="2.5" stroke="#5B9CFF" stroke-width="1.6"></circle></svg></span><span style="font-size: 14px; color: var(--ink);">Baja és 100 km-es körzete</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 22px 0 30px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted);">
+        <div>© Aqua Illa — Illa Italia Kft., Baja. Minden jog fenntartva.</div>
+        <a href="#cover" style="font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); text-decoration: none;" style-hover="color:var(--accent)">Vissza a tetejére ↑</a>
       </div>
     </div>
-    <div style="max-width: 1160px; margin: 24px auto 0; font-size: 12px; color: var(--muted);">© Aqua Illa — Illa Italia Kft. Minden jog fenntartva.</div>
   </footer>
 
 </div>
