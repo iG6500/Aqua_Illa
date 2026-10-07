@@ -1,0 +1,66 @@
+name: Build és kiadás (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Egyszerre csak egy kiadás fusson; a folyamatban lévőt nem szakítjuk meg.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Függőségek és Chromium telepítése
+        run: |
+          npm ci
+          npx playwright-core install --with-deps chromium
+
+      - name: Előre renderelt index.html generálása
+        run: npm run build
+
+      - name: Kiadandó fájlok összeállítása
+        run: |
+          mkdir _site
+          cp index.html 404.html robots.txt sitemap.xml _site/
+          cp -r assets _site/
+
+      - name: Ellenőrzés (h1, tartalom, nincs nyers sablon)
+        run: |
+          grep -q '<h1' _site/index.html
+          grep -q 'id="prerender"' _site/index.html
+          grep -q 'Mely településeken vállalnak munkát' _site/index.html
+
+      - uses: actions/configure-pages@v5
+        if: github.event_name != 'pull_request'
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
