@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0B0B0C; }
+  ::selection { background: var(--accent); color: #0B0B0C; }
+  @keyframes flowDash { to { stroke-dashoffset: -26; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  @keyframes expandIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes successPop { 0% { transform: scale(0.4); opacity: 0; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+</style>
+</helmet>
+
+<div style="font-family: 'IBM Plex Sans', sans-serif; color: var(--ink); background: var(--bg); min-height: 100vh; overflow-x: hidden; position: relative; transition: background 0.25s ease, color 0.25s ease; {{ themeVarsStyle }}">
+
+  <header style="position: sticky; top: 0; z-index: 60; display: flex; align-items: center; justify-content: space-between; padding: {{ headerPad }}; background: {{ headerBg }}; backdrop-filter: blur(10px); border-bottom: 1px solid {{ headerBorder }}; transition: all 0.3s ease;">
+    <div style="display: flex; align-items: center;">
+      <img src="{{ logoLockup }}" alt="Aqua Illa" style="height: 27px; width: auto; display: block;">
+    </div>
+    <nav style="display: flex; align-items: center; gap: 26px; flex-wrap: wrap;">
+      <a href="#why" style="color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 500;" style-hover="color:var(--accent)">Miért a gépészet</a>
+      <a href="#folyamat" style="color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 500;" style-hover="color:var(--accent)">Folyamat</a>
+      <a href="#ajanlat" style="background: transparent; color: var(--accent); text-decoration: none; font-size: 13.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--accent); white-space: nowrap;" style-hover="background:var(--accent);color:#0B0B0C">Ajánlatkérés</a>
+      <button onClick="{{ toggleTheme }}" aria-label="Téma váltása" style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: none; color: var(--ink); cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center;" style-hover="border-color:var(--accent);color:var(--accent)">{{ themeIcon }}</button>
+    </nav>
+  </header>
+
+  <sc-if value="{{ showRail }}" hint-placeholder-val="{{ false }}">
+    <nav style="position: fixed; left: 28px; top: 50%; transform: translateY(-50%); z-index: 55; display: flex; flex-direction: column; gap: 18px;">
+      <sc-for list="{{ railItems }}" as="item" hint-placeholder-count="8">
+        <button onClick="{{ item.onClick }}" style="display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; padding: 0; font-family: 'IBM Plex Mono', monospace; color: {{ item.color }};">
+          <span style="width: 18px; height: 1px; background: {{ item.color }};"></span>
+          <span style="font-size: 11px; letter-spacing: 0.03em;">{{ item.num }}</span>
+        </button>
+      </sc-for>
+    </nav>
+  </sc-if>
+
+  <section id="cover" style="position: relative; min-height: 92vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; padding: 60px 24px; background: #0B0B0C; overflow: hidden;">
+    <video src="uploads/21530519.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></video>
+    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(11,26,46,0.6) 0%, rgba(18,48,72,0.5) 45%, rgba(14,61,58,0.6) 100%);"></div>
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+      <img src="uploads/aquailla-lockup-nagy-negativ.svg" alt="Aqua Illa" style="height: 52px; width: auto;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.05em; color: #D8D8D2; text-transform: uppercase;">Medencegépészet és kivitelezés</div>
+    </div>
+    <button onClick="{{ scrollToHero }}" style="position: relative; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(91,156,255,0.5); background: none; color: var(--accent); cursor: pointer; font-size: 16px; animation: bounce 2s ease-in-out infinite;" style-hover="border-color:var(--accent);background:rgba(91,156,255,0.1)">↓</button>
+  </section>
+
+  
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 0 24px; padding-left: {{ mainPadLeft }}; transition: padding 0.2s ease;">
+
+    <section id="why" style="padding: 100px 0 70px;">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;">
+        <span style="color: var(--accent);">02</span> — miért ez a legfontosabb</div>
+      <h2 style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.6rem); letter-spacing: -0.01em; margin: 0 0 16px; max-width: 620px;">A medence nem a csempénél kezdődik</h2>
+      <p style="font-size: 15.5px; line-height: 1.65; color: var(--muted); max-width: 620px; margin: 0 0 44px;">A legtöbb ajánlat a formáról és a burkolatról szól. Fontos dolog a szemnek. <br>Mi onnan indulunk, ami a víz alatt történik, mert ott dől el, meddig marad öröm a medencéje. Fontos dolog a pénztárcának.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px; transition: all 0.25s ease;" style-hover="border-color:var(--accent);box-shadow:0 0 30px rgba(91,156,255,0.12);transform:translateY(-4px)">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" style="margin-bottom: 18px;"><path d="M12 3C12 3 5 11 5 15.5C5 19.09 8.13 22 12 22C15.87 22 19 19.09 19 15.5C19 11 12 3 12 3Z" stroke="#5B9CFF" stroke-width="1.6"></path></svg>
+          <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 8px;">Vízminőség</div>
+          <div style="font-size: 14px; line-height: 1.6; color: var(--muted);">A szűrés és a keringés méretezése dönti el, tiszta marad-e a víz kánikulában is — nem a beleöntött vegyszer mennyisége.</div>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px; transition: all 0.25s ease;" style-hover="border-color:var(--accent);box-shadow:0 0 30px rgba(91,156,255,0.12);transform:translateY(-4px)">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" style="margin-bottom: 18px;"><circle cx="12" cy="13" r="8" stroke="#5B9CFF" stroke-width="1.6"></circle><path d="M12 13L15 9M4 13H2M22 13H20M12 5V3" stroke="#5B9CFF" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 8px;">Üzemeltetési költség</div>
+          <div style="font-size: 14px; line-height: 1.6; color: var(--muted);">Egy jól méretezett szivattyú és automata vízkezelés évekre csökkenti a rezsit — ez a tervezésnél dől el, nem utólag.</div>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px; transition: all 0.25s ease;" style-hover="border-color:var(--accent);box-shadow:0 0 30px rgba(91,156,255,0.12);transform:translateY(-4px)">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" style="margin-bottom: 18px;"><path d="M12 3L19 6V11C19 16 16 19.5 12 21C8 19.5 5 16 5 11V6L12 3Z" stroke="#5B9CFF" stroke-width="1.6"></path><path d="M9 12L11 14L15 10" stroke="#5B9CFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 8px;">Élettartam</div>
+          <div style="font-size: 14px; line-height: 1.6; color: var(--muted);">A gépészeti hibák 3–5 év múlva jönnek elő, drágán. Ezt előre kiszámoljuk — nem utólag javítjuk.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="folyamat" style="padding: 70px 0;">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;">
+        <span style="color: var(--accent);">03</span> — Folyamat
+      </div>
+      <h2 style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.6rem); letter-spacing: -0.01em; margin: 0 0 32px;">Így dolgozunk, a felméréstől az átadásig</h2>
+
+      <div style="display: grid; grid-template-columns: minmax(0,1fr) 140px; gap: 16px; margin-bottom: 20px;">
+        <div style="position: relative; aspect-ratio: 21/9; border-radius: 18px; overflow: hidden; background: repeating-linear-gradient(120deg, #1A1A1D, #1A1A1D 14px, #151517 14px, #151517 28px); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;">
+          <button style="width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid #5B9CFF; background: rgba(11,11,12,0.5); color: var(--accent); font-size: 18px; cursor: pointer;" style-hover="background:var(--accent);color:#0B0B0C">▶</button>
+          <span style="position: absolute; bottom: 14px; left: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted);">videó helye — bemutató kivitelezésről</span>
+        </div>
+        <div style="display: grid; grid-template-rows: repeat(3, 1fr); gap: 8px;">
+          <sc-for list="{{ filmstrip }}" as="thumb" hint-placeholder-count="3">
+            <div style="border-radius: 10px; background: {{ thumb.bg }}; border: 1px solid var(--border);"></div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+        <sc-for list="{{ processSteps }}" as="step" hint-placeholder-count="4">
+          <div style="background: var(--surface); border: 1px solid var(--border); border-left: 2px solid var(--accent); border-radius: 14px; padding: 26px;">
+            <div style="font-family: 'IBM Plex Mono', monospace; color: var(--accent); font-size: 22px; font-weight: 500; margin-bottom: 14px;">{{ step.num }}</div>
+            <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 16.5px; margin-bottom: 8px;">{{ step.title }}</div>
+            <div style="font-size: 14px; line-height: 1.6; color: var(--muted);">{{ step.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="referenciak" style="padding: 70px 0;">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;">
+        <span style="color: var(--accent);">04</span> — Referenciák
+      </div>
+      <h2 style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.6rem); letter-spacing: -0.01em; margin: 0 0 32px;">Nemrég készült munkáink</h2>
+
+      <div style="position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; width: 100vw; display: flex; height: 60vh; min-height: 340px;">
+        <sc-for list="{{ referenceCards }}" as="ref" hint-placeholder-count="4">
+          <div style="flex: 1; position: relative; overflow: hidden; border-right: 1px solid var(--border); background: {{ ref.bg }};">
+            <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(11,11,12,0.9) 0%, rgba(11,11,12,0.15) 60%);"></div>
+            <span style="position: absolute; top: 18px; right: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--muted); background: rgba(11,11,12,0.5); padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border);">kép helye</span>
+            <div style="position: absolute; left: 20px; right: 16px; bottom: 22px; display: flex; align-items: flex-start; gap: 10px;">
+              <span style="width: 20px; height: 20px; border-radius: 50%; border: 3px solid #5B9CFF; flex-shrink: 0; margin-top: 2px;"></span>
+              <span style="font-size: 13px; line-height: 1.5; color: var(--ink); font-weight: 500;">{{ ref.caption }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="configurator" style="margin: 70px -24px; padding: 80px 24px; background: var(--surface); position: relative; overflow: hidden;">
+      <div style="position: absolute; top: -160px; right: -160px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(91,156,255,0.14), transparent 70%);"></div>
+      
+    <div style="max-width: 1112px; margin: 0 auto; position: relative; display: grid; grid-template-columns: minmax(0,1fr) minmax(340px, 460px); gap: 48px; align-items: center;">
+        <div>
+        <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;">
+          <span style="color: var(--accent);">05</span> — Gépészeti konfigurátor
+        </div>
+        <h2 style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.6rem); letter-spacing: -0.01em; margin: 0 0 16px;">Nézze meg, nagyjából mibe kerülne az Ön medencéje</h2>
+        <p style="font-size: 15.5px; line-height: 1.65; color: var(--muted); margin: 0;">Négy rövid lépés. A végén egy tájékozódó sávot kap — a pontos árajánlatot mindig helyszíni felmérés után adjuk.</p>
+        </div>
+
+        <div style="background: var(--surface); border-radius: 24px; border: 1px solid rgba(91,156,255,0.35); box-shadow: 0 30px 70px rgba(0,0,0,0.55), 0 0 60px rgba(91,156,255,0.12); overflow: hidden; height: {{ cardHeightPx }}; transition: height 0.35s cubic-bezier(0.22,1,0.36,1);">
+        <div id="config-card-measure" style="padding: 38px;">
+          <sc-if value="{{ !isResultStep }}" hint-placeholder-val="{{ true }}">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 8px;">{{ stepLabel }}</div>
+            <div style="width: 100%; height: 4px; background: var(--border); border-radius: 999px; overflow: hidden; margin-bottom: 22px;">
+              <div style="height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.35s ease; width: {{ progressPct }};"></div>
+            </div>
+            <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 18px;">{{ currentQuestion }}</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px;">
+              <sc-for list="{{ currentOptions }}" as="opt" hint-placeholder-count="2">
+                <button onClick="{{ opt.onSelect }}" style="text-align: left; padding: 14px 18px; border-radius: 12px; border: 1.5px solid {{ opt.borderColor }}; background: {{ opt.bg }}; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; transition: all 0.15s ease;" style-hover="border-color:var(--accent)">{{ opt.label }}</button>
+              </sc-for>
+            </div>
+            <button onClick="{{ goBack }}" disabled="{{ isFirstStep }}" style="background: none; border: none; color: {{ backColor }}; font-size: 14px; cursor: pointer; padding: 8px 4px; font-family: 'IBM Plex Sans', sans-serif;">Vissza</button>
+          </sc-if>
+          <sc-if value="{{ isResultStep }}" hint-placeholder-val="{{ false }}">
+            <sc-if value="{{ showSummary }}" hint-placeholder-val="{{ true }}">
+              <div style="animation: fadeUp 0.4s ease both;">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">Tájékozódó sáv</div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 36px; color: var(--accent); margin-bottom: 14px;">{{ estimateRange }}</div>
+                <div style="font-size: 14px; line-height: 1.65; color: var(--muted); margin-bottom: 26px;">Ez egy tájékoztató sáv az Ön válaszai alapján, nem konkrét ajánlat. A pontos árat mindig helyszíni felmérés után adjuk.</div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                  <button onClick="{{ openContactForm }}" style="background: var(--accent); color: #0B0B0C; border: none; font-weight: 700; font-size: 14.5px; padding: 12px 22px; border-radius: 999px; cursor: pointer;" style-hover="background:var(--accent-strong)">Kérek pontos ajánlatot</button>
+                  <button onClick="{{ resetConfigurator }}" style="background: none; border: 1px solid var(--border); color: var(--ink); font-size: 14px; padding: 12px 20px; border-radius: 999px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;">Újrakezdés</button>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ showContactFields }}" hint-placeholder-val="{{ false }}">
+              <div style="animation: expandIn 0.45s cubic-bezier(0.22,1,0.36,1) both;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 18px;">Kérjük az elérhetőségét</div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 15px; color: var(--accent);">{{ estimateRange }}</div>
+                </div>
+                <div style="font-size: 13.5px; color: var(--muted); margin-bottom: 22px;">Ezután 1-2 munkanapon belül egyeztetünk egy helyszíni felmérésről.</div>
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px;">
+                  <input value="{{ contactName }}" onChange="{{ onNameChange }}" placeholder="Név" style="background: rgba(245,245,242,0.05); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none;" style-focus="border-color:var(--accent)">
+                  <input value="{{ contactPhone }}" onChange="{{ onPhoneChange }}" placeholder="Telefonszám" style="background: rgba(245,245,242,0.05); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none;" style-focus="border-color:var(--accent)">
+                  <input value="{{ contactEmail }}" onChange="{{ onEmailChange }}" placeholder="E-mail" style="background: rgba(245,245,242,0.05); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none;" style-focus="border-color:var(--accent)">
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                  <button onClick="{{ submitContactForm }}" disabled="{{ submitDisabled }}" style="background: var(--accent); color: #0B0B0C; border: none; font-weight: 700; font-size: 14.5px; padding: 12px 24px; border-radius: 999px; cursor: pointer; opacity: {{ submitOpacity }};" style-hover="background:var(--accent-strong)">Elküldöm</button>
+                  <button onClick="{{ closeContactForm }}" style="background: none; border: 1px solid var(--border); color: var(--ink); font-size: 14px; padding: 12px 20px; border-radius: 999px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;">Vissza</button>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ contactSubmitted }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align: center; padding: 20px 0; animation: expandIn 0.4s ease both;">
+                <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(91,156,255,0.12); border: 2px solid #5B9CFF; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 24px; color: var(--accent); animation: successPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;">✓</div>
+                <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 8px;">Köszönjük, {{ contactName }}!</div>
+                <div style="font-size: 14px; color: var(--muted); line-height: 1.6;">Hamarosan jelentkezünk a megadott elérhetőségen egy helyszíni felmérés egyeztetéséhez.</div>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" style="padding: 70px 0;">
+      <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;">
+        <span style="color: var(--accent);">06</span> — Gyakori kérdések
+      </div>
+      <h2 style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.6rem); letter-spacing: -0.01em; margin: 0 0 32px;">Amit érdemes előre tudni</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <sc-for list="{{ faqItems }}" as="faq" hint-placeholder-count="4">
+          <div style="border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--surface);">
+            <button onClick="{{ faq.toggle }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; background: none; border: none; text-align: left; font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 15px; color: var(--ink); cursor: pointer;">
+              {{ faq.question }}
+              <span style="flex-shrink: 0; transform: {{ faq.arrowTransform }}; transition: transform 0.2s ease; color: var(--accent);">⌄</span>
+            </button>
+            <div style="max-height: {{ faq.maxHeight }}; overflow: hidden; transition: max-height 0.25s ease;">
+              <div style="padding: 0 20px 18px; font-size: 14.5px; line-height: 1.65; color: var(--muted);">{{ faq.answer }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="terulet" style="position: relative; margin: 70px -24px; padding: 90px 24px 100px; overflow: hidden;">
+      <div style="position: relative; max-width: 1112px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px;">
+          <span style="color: var(--accent);">07</span> — Kiszállási terület és kapcsolat
+        </div>
+        <h2 style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.6rem); letter-spacing: -0.01em; margin: 0 0 16px; max-width: 640px;">Pécs–Szeged–Kecskemét háromszög, Baja központtal</h2>
+        <p style="font-size: 15.5px; line-height: 1.65; color: var(--muted); margin: 0 0 44px; max-width: 640px;">100 km-es körzetben dolgozunk, hogy a felmérés, a kivitelezés és az utókövetés is valóban személyes tudjon maradni.</p>
+
+        <div style="display: grid; grid-template-columns: minmax(0,1fr) minmax(280px, 440px); gap: 28px; align-items: stretch;">
+          <div style="background: var(--surface); border-radius: 24px; border: 1px solid rgba(91,156,255,0.3); box-shadow: 0 30px 70px rgba(0,0,0,0.5), 0 0 50px rgba(91,156,255,0.1); padding: 40px; display: flex; flex-direction: column;">
+            <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 6px;">Írjon nekünk</div>
+            <div style="font-size: 13.5px; color: var(--muted); margin-bottom: 26px;">Néhány sorban vázolja a projektet — visszajelzünk, mielőtt időpontot egyeztetnénk.</div>
+            <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; flex: 1;">
+              <input placeholder="Név" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.15s ease;" style-focus="border-color:var(--accent)">
+              <input placeholder="E-mail" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.15s ease;" style-focus="border-color:var(--accent)">
+              <textarea placeholder="Üzenet" rows="4" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; resize: none; flex: 1; transition: border-color 0.15s ease;" style-focus="border-color:var(--accent)"></textarea>
+            </div>
+            <button style="width: 100%; background: var(--accent); color: #0B0B0C; border: none; font-weight: 700; font-size: 15px; padding: 15px 22px; border-radius: 999px; cursor: pointer; box-shadow: 0 0 30px rgba(91,156,255,0.3);" style-hover="background:var(--accent-strong);transform:translateY(-1px)">Elküldöm</button>
+          </div>
+
+          <div style="background: var(--surface); border-radius: 24px; border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 18px;">
+            <svg viewBox="0 0 400 300" style="width: 100%; height: auto;">
+              <polygon points="80,240 340,220 210,40" fill="none" stroke="rgba(91,156,255,0.35)" stroke-width="1.5" stroke-dasharray="4 5"></polygon>
+              <circle cx="196" cy="176" r="4" fill="#5B9CFF" style="animation: pulseDot 1.8s ease-in-out infinite;"></circle>
+              <text x="196" y="168" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="700" font-size="13" fill="#F5F5F2">Baja</text>
+              <circle cx="80" cy="240" r="3" fill="#A6A6A0"></circle>
+              <text x="80" y="260" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#A6A6A0">Pécs</text>
+              <circle cx="340" cy="220" r="3" fill="#A6A6A0"></circle>
+              <text x="340" y="240" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#A6A6A0">Szeged</text>
+              <circle cx="210" cy="40" r="3" fill="#A6A6A0"></circle>
+              <text x="210" y="26" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#A6A6A0">Kecskemét</text>
+            </svg>
+            <div style="text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted);">Vázlatos, nem méretarányos ábra.</div>
+            <div style="height: 1px; background: var(--border);"></div>
+            <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px 4px;">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0;">
+                <span style="width: 34px; height: 34px; border-radius: 50%; background: rgba(91,156,255,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="#5B9CFF" stroke-width="1.6"></path></svg>
+                </span>
+                <span style="font-size: 14px; color: var(--ink);">+36 30 000 0000</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0;">
+                <span style="width: 34px; height: 34px; border-radius: 50%; background: rgba(91,156,255,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="#5B9CFF" stroke-width="1.6"></path><path d="M4 6l8 7 8-7" stroke="#5B9CFF" stroke-width="1.6"></path></svg>
+                </span>
+                <span style="font-size: 14px; color: var(--ink);">info@aquailla.hu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="border-top: 1px solid var(--border); padding: 44px 24px;">
+    <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <img src="{{ logoLockup }}" alt="Aqua Illa" style="height: 24px; width: auto; display: block;">
+        <div style="font-size: 13px; color: var(--muted); border-left: 1px solid var(--border); padding-left: 12px;">Illa Italia Kft. — Baja</div>
+      </div>
+      <div style="text-align: right; font-size: 13.5px; color: var(--muted);">
+        <div>info@aquailla.hu</div>
+        <div>+36 30 000 0000</div>
+      </div>
+    </div>
+    <div style="max-width: 1160px; margin: 24px auto 0; font-size: 12px; color: var(--muted);">© Aqua Illa — Illa Italia Kft. Minden jog fenntartva.</div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = {
+    scrolled: false,
+    windowWidth: 1200,
+    activeSection: 'cover',
+    faqOpen: 0,
+    step: 0,
+    answers: {},
+    contactStage: 'summary',
+    contactName: '',
+    contactPhone: '',
+    contactEmail: '',
+    cardHeight: null,
+    theme: 'dark'
+  };
+
+  toggleTheme() { this.setState({ theme: this.state.theme === 'dark' ? 'light' : 'dark' }); }
+
+  sections = [
+    { id: 'cover', num: '00' },
+    { id: 'hero', num: '01' },
+    { id: 'why', num: '02' },
+    { id: 'folyamat', num: '03' },
+    { id: 'referenciak', num: '04' },
+    { id: 'configurator', num: '05' },
+    { id: 'faq', num: '06' },
+    { id: 'terulet', num: '07' }
+  ];
+
+  componentDidMount() {
+    this._onScroll = () => {
+      this.setState({ scrolled: window.scrollY > 12 });
+      let active = this.sections[0].id;
+      for (const s of this.sections) {
+        const el = document.getElementById(s.id);
+        if (el && el.getBoundingClientRect().top < window.innerHeight / 2) active = s.id;
+      }
+      if (active !== this.state.activeSection) this.setState({ activeSection: active });
+    };
+    this._onResize = () => { this.setState({ windowWidth: window.innerWidth }); this.measureCard(); };
+    window.addEventListener('scroll', this._onScroll);
+    window.addEventListener('resize', this._onResize);
+    this._onResize();
+    this.measureCard();
+  }
+  measureCard() {
+    requestAnimationFrame(() => {
+      const el = document.getElementById('config-card-measure');
+      if (el) {
+        const h = el.scrollHeight;
+        if (h && h !== this.state.cardHeight) this.setState({ cardHeight: h });
+      }
+    });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  goToSection(id) {
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 20, behavior: 'smooth' });
+  }
+
+  questions = [
+    { key: 'location', q: 'Hol épülne a medence?', options: ['Kertben (kültér)', 'Beltérben'] },
+    { key: 'type', q: 'Új építés vagy felújítás?', options: ['Új építés', 'Meglévő medence felújítása'] },
+    { key: 'size', q: 'Nagyjából mekkora medencéről van szó?', options: ['Kis medence (≤20 m²)', 'Közepes (20–40 m²)', 'Nagy (40+ m²)'] },
+    { key: 'treatment', q: 'Milyen vízkezelést képzel el?', options: ['Klasszikus klóros', 'Sós vizes elektrolízis', 'Automata, minimális vegyszerrel'] }
+  ];
+
+  faqs = [
+    { question: 'Miért nem elég, ha "szép" a medence?', answer: 'A megjelenés a burkolatról és a formáról szól, de a víz minőségét, az üzemeltetés költségét és a gépészet élettartamát a felszín alatt meghozott döntések határozzák meg.' },
+    { question: 'Mennyi idő alatt készül el egy medence?', answer: 'Ez a méretétől, a helyszíni adottságoktól és a választott gépészettől függ — a pontos ütemezést a helyszíni felmérés után adjuk meg.' },
+    { question: 'Csak új építésnél segítenek, vagy felújításnál is?', answer: 'Mindkettőben. Új építésnél a teljes gépészeti tervezéstől kezdjük, felújításnál a meglévő rendszer felmérésével és a hibás elemek cseréjével.' },
+    { question: 'Mennyi garanciát vállalnak a gépészetre?', answer: 'A vállalt garancia a beépített elemektől és a kivitelezés körétől függ — ezt írásban, a szerződésben rögzítjük minden projektnél.' }
+  ];
+
+  bgs = [
+    'repeating-linear-gradient(120deg, #16222c, #16222c 12px, #0e161c 12px, #0e161c 24px)',
+    'repeating-linear-gradient(120deg, #1a1a1d, #1a1a1d 12px, #101012 12px, #101012 24px)',
+    'repeating-linear-gradient(120deg, #14201f, #14201f 12px, #0c1413 12px, #0c1413 24px)',
+    'repeating-linear-gradient(120deg, #1c1a24, #1c1a24 12px, #121016 12px, #121016 24px)'
+  ];
+
+  referenceCards = [
+    { caption: 'Kertes családi ház, Baja — 32 m², automata vízkezelés' },
+    { caption: 'Új építésű ház, Kecskemét — 45 m², hőszivattyús rendszer' },
+    { caption: 'Felújítás, Bácsalmás — elavult gépészet cseréje' },
+    { caption: 'Beltéri medence, Baja környéke — okos automatizálás' }
+  ].map((r, i) => ({ ...r, bg: this.bgs[i] }));
+
+  filmstrip = [0, 1, 2].map(i => ({ bg: this.bgs[i] }));
+
+  selectAnswer(key, value) {
+    const answers = { ...this.state.answers, [key]: value };
+    this.setState({ answers, step: this.state.step + 1 });
+    this.remeasureSoon();
+  }
+  goBack() { if (this.state.step > 0) this.setState({ step: this.state.step - 1 }); this.remeasureSoon(); }
+  resetConfigurator() { this.setState({ step: 0, answers: {}, contactStage: 'summary', contactName: '', contactPhone: '', contactEmail: '' }); this.remeasureSoon(); }
+  toggleFaq(i) { this.setState({ faqOpen: this.state.faqOpen === i ? -1 : i }); }
+  openContactForm() { this.setState({ contactStage: 'form' }); this.remeasureSoon(); }
+  closeContactForm() { this.setState({ contactStage: 'summary' }); this.remeasureSoon(); }
+  submitContactForm() {
+    if (!this.state.contactName.trim() || (!this.state.contactPhone.trim() && !this.state.contactEmail.trim())) return;
+    this.setState({ contactStage: 'submitted' });
+    this.remeasureSoon();
+  }
+  remeasureSoon() {
+    this.measureCard();
+    setTimeout(() => this.measureCard(), 60);
+    setTimeout(() => this.measureCard(), 220);
+  }
+
+  computeEstimate() {
+    const { size, location, treatment } = this.state.answers;
+    let low = 3, high = 5;
+    if (size === 'Közepes (20–40 m²)') { low = 5; high = 8; }
+    if (size === 'Nagy (40+ m²)') { low = 8; high = 12; }
+    if (location === 'Beltérben') { low += 1; high += 1; }
+    if (treatment === 'Automata, minimális vegyszerrel') { low += 0.5; high += 1; }
+    return low + '–' + high + ' M Ft';
+  }
+
+  renderVals() {
+    const { scrolled, windowWidth, activeSection, faqOpen, step, answers, contactStage, contactName, contactPhone, contactEmail, theme } = this.state;
+    const isResultStep = step >= this.questions.length;
+    const q = !isResultStep ? this.questions[step] : null;
+    const showRail = windowWidth >= 980;
+    const canSubmit = contactName.trim() && (contactPhone.trim() || contactEmail.trim());
+    const themeVarsStyle = theme === 'dark'
+      ? '--bg:#0B0B0C;--surface:#151517;--ink:#F5F5F2;--muted:#A6A6A0;--border:rgba(245,245,242,0.14);--accent:#5B9CFF;--accent-strong:#8FBBFF;'
+      : '--bg:#FBFAF5;--surface:#FFFFFF;--ink:#101010;--muted:#5C5C56;--border:rgba(16,16,16,0.12);--accent:#146EFF;--accent-strong:#0E4FBF;';
+
+    return {
+      themeVarsStyle,
+      theme,
+      logoLockup: theme === 'dark' ? 'uploads/aquailla-lockup-nagy-negativ.svg' : 'uploads/aquailla-lockup-nagy-elsodleges.svg',
+      toggleTheme: () => this.toggleTheme(),
+      themeIcon: theme === 'dark' ? '☀' : '☾',
+      headerPad: scrolled ? '14px 24px' : '20px 24px',
+      headerBg: scrolled ? 'color-mix(in srgb, var(--bg) 85%, transparent)' : 'transparent',
+      headerBorder: scrolled ? 'var(--border)' : 'transparent',
+      showRail,
+      mainPadLeft: showRail ? '96px' : '24px',
+      railItems: this.sections.map(s => ({
+        num: s.num,
+        color: activeSection === s.id ? 'var(--accent)' : 'var(--muted)',
+        onClick: () => this.goToSection(s.id)
+      })),
+      scrollToHero: () => this.goToSection('hero'),
+
+      referenceCards: this.referenceCards,
+      filmstrip: this.filmstrip,
+
+      processSteps: [
+        { num: '01', title: 'Helyszíni felmérés', body: 'Talaj, közművek, a kert vagy a helyiség adottságai — helyben nézzük meg, nem alaprajzról találgatjuk.' },
+        { num: '02', title: 'Gépészeti és kiviteli terv', body: 'Méretezett szűrés, keringés és automatizálás, az Ön medencéjéhez igazítva — írásban, számokkal.' },
+        { num: '03', title: 'Kivitelezés', body: 'Földmunka, szerkezet, gépészet, burkolat — egy csapattal, végig.' },
+        { num: '04', title: 'Átadás és beüzemelés', body: 'A vízkezelést Önnel együtt állítjuk be élesben, hogy az első naptól kezdve értse, mit hogyan kezel.' }
+      ],
+
+      isResultStep,
+      stepLabel: q ? (step + 1) + ' / ' + this.questions.length : '',
+      progressPct: q ? Math.round(((step + 1) / this.questions.length) * 100) + '%' : '100%',
+      currentQuestion: q ? q.q : '',
+      currentOptions: q ? q.options.map(opt => ({
+        label: opt,
+        bg: answers[q.key] === opt ? 'rgba(91,156,255,0.1)' : 'transparent',
+        borderColor: answers[q.key] === opt ? 'var(--accent)' : 'var(--border)',
+        onSelect: () => this.selectAnswer(q.key, opt)
+      })) : [],
+      isFirstStep: step === 0,
+      backColor: step === 0 ? 'var(--border)' : 'var(--muted)',
+      goBack: () => this.goBack(),
+      estimateRange: isResultStep ? this.computeEstimate() : '',
+      resetConfigurator: () => this.resetConfigurator(),
+      showSummary: contactStage === 'summary',
+      showContactFields: contactStage === 'form',
+      contactSubmitted: contactStage === 'submitted',
+      openContactForm: () => this.openContactForm(),
+      closeContactForm: () => this.closeContactForm(),
+      submitContactForm: () => this.submitContactForm(),
+      submitDisabled: !canSubmit,
+      submitOpacity: canSubmit ? '1' : '0.5',
+      contactName,
+      contactPhone,
+      contactEmail,
+      onNameChange: e => this.setState({ contactName: e.target.value }),
+      onPhoneChange: e => this.setState({ contactPhone: e.target.value }),
+      onEmailChange: e => this.setState({ contactEmail: e.target.value }),
+      cardHeightPx: this.state.cardHeight ? this.state.cardHeight + 'px' : 'auto',
+
+      faqItems: this.faqs.map((f, i) => ({
+        question: f.question,
+        answer: f.answer,
+        maxHeight: faqOpen === i ? '200px' : '0px',
+        arrowTransform: faqOpen === i ? 'rotate(180deg)' : 'rotate(0deg)',
+        toggle: () => this.toggleFaq(i)
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>
