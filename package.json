@@ -1,0 +1,12 @@
+{
+  "name": "aqua-illa",
+  "private": true,
+  "description": "Aqua Illa weboldal",
+  "scripts": {
+    "build": "node scripts/prerender.js",
+    "serve": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.50.0"
+  }
+}
