@@ -437,7 +437,7 @@
 
   <sc-if value="{{ showRail }}" hint-placeholder-val="{{ false }}">
     <nav style="position: fixed; left: 28px; top: 50%; transform: translateY(-50%); z-index: 55; display: flex; flex-direction: column; gap: 18px;">
-      <sc-for list="{{ railItems }}" as="item" hint-placeholder-count="8">
+      <sc-for list="{{ railItems }}" as="item" hint-placeholder-count="9">
         <button sc-camel-on-click="{{ item.onClick }}" style="display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; padding: 0; font-family: 'IBM Plex Mono', monospace; color: {{ item.color }};">
           <span style="width: 18px; height: 1px; background: {{ item.color }};"></span>
           <span style="font-size: 11px; letter-spacing: 0.03em;">{{ item.num }}</span>
@@ -702,7 +702,7 @@
 
   </main>
 
-  <footer style="position: relative; margin-top: 40px; background: var(--surface); border-top: 1px solid var(--border); overflow: hidden;">
+  <footer id="footer" style="position: relative; margin-top: 40px; background: var(--surface); border-top: 1px solid var(--border); overflow: hidden;">
     <svg sc-camel-view-box="0 0 1200 24" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 24px; opacity: 0.5;">
       <path d="M0 12 C100 0 200 24 300 12 S500 0 600 12 S800 24 900 12 S1100 0 1200 12" fill="none" stroke="#5B9CFF" stroke-width="1.5" stroke-dasharray="6 7" style="animation: flowDash 2.4s linear infinite;"></path>
     </svg>
@@ -715,7 +715,7 @@
     <div style="position: relative; max-width: 1160px; margin: 0 auto; padding: 72px 24px 0;">
       <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px; padding-bottom: 56px; border-bottom: 1px solid var(--border);">
         <div style="max-width: 620px;">
-          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; margin-bottom: 14px;"><span style="color: var(--accent);">●</span> Kezdjük el</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; margin-bottom: 14px;"><span style="color: var(--accent);">08</span> — Kezdjük el</div>
           <div style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 4vw, 2.9rem); line-height: 1.08; letter-spacing: -0.01em;">A jó medence a felszín alatt dől el.</div>
         </div>
         <a href="#configurator" style="background: var(--accent); color: #0B0B0C; text-decoration: none; font-weight: 700; font-size: 15px; padding: 15px 28px; border-radius: 999px; box-shadow: 0 0 30px rgba(91,156,255,0.3); white-space: nowrap;" style-hover="background:var(--accent-strong);transform:translateY(-1px)">Ajánlatot kérek →</a>
@@ -784,7 +784,8 @@ class Component extends DCLogic {
     { id: 'referenciak', num: '04' },
     { id: 'configurator', num: '05' },
     { id: 'faq', num: '06' },
-    { id: 'terulet', num: '07' }
+    { id: 'terulet', num: '07' },
+    { id: 'footer', num: '08' }
   ];
 
   componentDidMount() {
