@@ -19,6 +19,10 @@ npm run build      # újragenerálja az index.html-t az index.src.html-ből
 
 Az új `index.html`-t commitold is: a Pages közvetlenül azt szolgálja ki.
 
+## Ajánlatkérés (Formspree)
+
+A konfigurátor űrlapja Formspree-n keresztül küld e-mailt. Beállítás: formspree.io → új form (a célcím az `illaitalia2021@gmail.com`), majd a kapott azonosítót (`https://formspree.io/f/<azonosító>` vége) be kell írni az `index.src.html`-ben a `formspreeId = '';` sorba, és újra kell generálni az oldalt. Amíg az azonosító üres, az űrlap e-mail-vázlatot nyit tartalékként. Küldési hibánál is ez a tartalék jelenik meg.
+
 ## Automatikus kiadás (GitHub Actions)
 
 A `.github/workflows/pages.yml` minden `main`-re érkező push után legenerálja az `index.html`-t, és kiadja az oldalt a GitHub Pages-re. Pull requestnél csak építi és ellenőrzi, nem ad ki. Ezért a forrás (`index.src.html`) szerkesztése után elég pusholni.
