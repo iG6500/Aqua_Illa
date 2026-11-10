@@ -671,13 +671,13 @@
           <span style="color: var(--accent);">05</span> — Gépészeti konfigurátor
         </div>
         <h2 style="font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(1.9rem, 3.6vw, 2.6rem); letter-spacing: -0.01em; margin: 0 0 16px;">Nézze meg, nagyjából mibe kerülne az Ön medencéje</h2>
-        <p style="font-size: 15.5px; line-height: 1.65; color: var(--muted); margin: 0;">Öt rövid lépés. A végén egy tájékozódó sávot kap — a pontos árajánlatot mindig helyszíni felmérés után adjuk.</p>
+        <p style="font-size: 15.5px; line-height: 1.65; color: var(--muted); margin: 0;">Nyolc rövid lépés. A végén egy tájékozódó sávot kap — a pontos árajánlatot mindig helyszíni felmérés után adjuk.</p>
       </div>
 
       <div style="display: grid; grid-template-columns: {{ configCols }}; gap: 28px; align-items: start;">
         <sc-if value="{{ showStepRail }}" hint-placeholder-val="{{ true }}">
           <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 6px;">
-            <sc-for list="{{ stepRail }}" as="s" hint-placeholder-count="6">
+            <sc-for list="{{ stepRail }}" as="s" hint-placeholder-count="9">
               <button sc-camel-on-click="{{ s.onClick }}" style="display: flex; align-items: center; gap: 12px; background: none; border: none; padding: 9px 0; text-align: left; cursor: {{ s.cursor }}; font-family: 'IBM Plex Sans', sans-serif;">
                 <span style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid {{ s.circleBorder }}; background: {{ s.circleBg }}; color: {{ s.circleColor }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; transition: all 0.2s ease;">{{ s.mark }}</span>
                 <span style="font-size: 14px; font-weight: {{ s.labelWeight }}; color: {{ s.labelColor }};">{{ s.label }}</span>
@@ -742,7 +742,7 @@
                   </button>
                 </sc-for>
               </div>
-              <button sc-camel-on-click="{{ noExtras }}" style="width: 100%; padding: 14px; border-radius: 14px; border: 1.5px dashed var(--border); background: none; color: var(--muted); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; margin-bottom: 22px;" style-hover="border-color:var(--accent);color:var(--ink)">Nincs szükségem extrákra</button>
+              <button sc-camel-on-click="{{ noExtras }}" style="width: 100%; padding: 14px; border-radius: 14px; border: 1.5px dashed var(--border); background: none; color: var(--muted); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; cursor: pointer; margin-bottom: 22px;" style-hover="border-color:var(--accent);color:var(--ink)">{{ skipLabel }}</button>
               <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                 <button sc-camel-on-click="{{ goBack }}" style="background: none; border: none; color: var(--muted); font-size: 14px; cursor: pointer; padding: 8px 4px; font-family: 'IBM Plex Sans', sans-serif;">Vissza</button>
                 <button sc-camel-on-click="{{ nextStep }}" style="background: var(--accent); color: #0B0B0C; border: none; font-weight: 700; font-size: 14.5px; padding: 12px 24px; border-radius: 999px; cursor: pointer;" style-hover="background:var(--accent-strong)">{{ extrasNextLabel }}</button>
@@ -758,12 +758,15 @@
               <div style="animation: fadeUp 0.4s ease both;">
                 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">Tájékozódó sáv</div>
                 <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 36px; color: var(--accent); margin-bottom: 16px;">{{ estimateRange }}</div>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;">
-                  <sc-for list="{{ summaryChips }}" as="chip" hint-placeholder-count="5">
-                    <span style="font-size: 12.5px; color: var(--ink); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; background: rgba(91,156,255,0.06);">{{ chip.text }}</span>
+                <div style="display: flex; flex-direction: column; margin-bottom: 18px;">
+                  <sc-for list="{{ lineItems }}" as="li" hint-placeholder-count="5">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-top: 1px solid var(--border); font-size: 13.5px;">
+                      <span style="color: var(--ink);">{{ li.label }}</span>
+                      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--muted); white-space: nowrap;">{{ li.range }}</span>
+                    </div>
                   </sc-for>
                 </div>
-                <div style="font-size: 14px; line-height: 1.65; color: var(--muted); margin-bottom: 26px;">Ez egy tájékoztató sáv az Ön válaszai alapján, nem konkrét ajánlat. A pontos árat mindig helyszíni felmérés után adjuk.</div>
+                <div style="font-size: 14px; line-height: 1.65; color: var(--muted); margin-bottom: 26px;">Ez egy tájékoztató, tételes sáv az Ön válaszai alapján, nem konkrét ajánlat. A pontos árat mindig helyszíni felmérés után adjuk.</div>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                   <button sc-camel-on-click="{{ openContactForm }}" style="background: var(--accent); color: #0B0B0C; border: none; font-weight: 700; font-size: 14.5px; padding: 12px 22px; border-radius: 999px; cursor: pointer;" style-hover="background:var(--accent-strong)">Kérek pontos ajánlatot</button>
                   <button sc-camel-on-click="{{ resetConfigurator }}" style="background: none; border: 1px solid var(--border); color: var(--ink); font-size: 14px; padding: 12px 20px; border-radius: 999px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;">Újrakezdés</button>
@@ -790,6 +793,8 @@
                 <sc-if value="{{ areaMsg.show }}" hint-placeholder-val="{{ false }}">
                   <div style="font-size: 13px; color: {{ areaMsg.color }}; margin-bottom: 14px;">{{ areaMsg.text }}</div>
                 </sc-if>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; margin-top: 8px;">Megjegyzés (nem kötelező)</div>
+                <textarea value="{{ contactNote }}" sc-camel-on-change="{{ onNoteChange }}" rows="3" placeholder="pl. fólia színe, szegélykő, térburkolat, egyéb kérés" style="background: rgba(245,245,242,0.05); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; width: 100%; resize: vertical;" style-focus="border-color:var(--accent)"></textarea>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px;">
                   <button sc-camel-on-click="{{ submitContactForm }}" disabled="{{ submitDisabled }}" style="background: var(--accent); color: #0B0B0C; border: none; font-weight: 700; font-size: 14.5px; padding: 12px 24px; border-radius: 999px; cursor: pointer; opacity: {{ submitOpacity }};" style-hover="background:var(--accent-strong)">Elküldöm</button>
                   <button sc-camel-on-click="{{ closeContactForm }}" style="background: none; border: 1px solid var(--border); color: var(--ink); font-size: 14px; padding: 12px 20px; border-radius: 999px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;">Vissza</button>
@@ -797,10 +802,18 @@
               </div>
             </sc-if>
             <sc-if value="{{ contactSubmitted }}" hint-placeholder-val="{{ false }}">
-              <div style="text-align: center; padding: 20px 0; animation: expandIn 0.4s ease both;">
-                <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(91,156,255,0.12); border: 2px solid #5B9CFF; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 24px; color: var(--accent); animation: successPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;">✓</div>
-                <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 8px;">Köszönjük, {{ contactName }}!</div>
-                <div style="font-size: 14px; color: var(--muted); line-height: 1.6;">Hamarosan jelentkezünk a megadott elérhetőségen egy helyszíni felmérés egyeztetéséhez.</div>
+              <div style="animation: expandIn 0.4s ease both;">
+                <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+                  <div style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; background: rgba(91,156,255,0.12); border: 2px solid #5B9CFF; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent); animation: successPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;">✓</div>
+                  <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 18px;">Még egy lépés, {{ contactName }}!</div>
+                </div>
+                <div style="font-size: 14px; line-height: 1.65; color: var(--muted); margin-bottom: 16px;">Megnyitottuk az e-mail-vázlatot a kért tételekkel. Küldje el nekünk, és 1–2 munkanapon belül jelentkezünk a helyszíni felmérés egyeztetésével. Ha nem nyílt meg a levelezőprogram, használja az alábbi gombokat.</div>
+                <textarea value="{{ summaryText }}" sc-camel-read-only="{{ true }}" rows="16" style="background: rgba(245,245,242,0.05); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; color: var(--ink); font-size: 13px; line-height: 1.55; font-family: 'IBM Plex Mono', monospace; outline: none; width: 100%; resize: vertical; margin-bottom: 16px;"></textarea>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                  <a href="{{ mailtoHref }}" style="background: var(--accent); color: #0B0B0C; text-decoration: none; font-weight: 700; font-size: 14.5px; padding: 12px 22px; border-radius: 999px;" style-hover="background:var(--accent-strong)">E-mail megnyitása</a>
+                  <button sc-camel-on-click="{{ copySummary }}" style="background: none; border: 1px solid var(--border); color: var(--ink); font-size: 14px; padding: 12px 20px; border-radius: 999px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;">{{ copyLabel }}</button>
+                  <button sc-camel-on-click="{{ resetConfigurator }}" style="background: none; border: none; color: var(--muted); font-size: 14px; padding: 12px 8px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;">Újrakezdés</button>
+                </div>
               </div>
             </sc-if>
           </sc-if>
@@ -978,6 +991,8 @@ class Component extends DCLogic {
     contactEmail: '',
     contactZip: '',
     contactTown: '',
+    contactNote: '',
+    copied: false,
     extras: [],
     sizeW: '',
     sizeL: '',
@@ -1038,19 +1053,31 @@ class Component extends DCLogic {
   steps = [
     { key: 'location', label: 'Helyszín', kind: 'choice', q: 'Hol épülne a medence?', options: [['Kertben (kültér)', 'garden'], ['Beltérben', 'indoor']] },
     { key: 'type', label: 'Típus', kind: 'choice', q: 'Új építés vagy felújítás?', options: [['Új építés', 'plus'], ['Meglévő medence felújítása', 'wrench']] },
+    { key: 'build', label: 'Kivitel', kind: 'choice', q: 'Milyen kivitelű medencét szeretne?', options: [['Épített, fóliás medence', 'layers'], ['Előre gyártott medence', 'box'], ['Még nem tudom', 'help']] },
     { key: 'size', label: 'Méret', kind: 'size', q: 'Mekkora medencét képzel el?' },
-    { key: 'treatment', label: 'Vízkezelés', kind: 'choice', q: 'Milyen vízkezelést képzel el?', options: [['Klasszikus klóros', 'drop'], ['Sós vizes elektrolízis', 'cube'], ['Automata, minimális vegyszerrel', 'sliders']] },
-    { key: 'extras', label: 'Extrák', kind: 'extras', q: 'Mire lenne még szüksége?' }
+    { key: 'treatment', label: 'Vízkezelés', kind: 'choice', q: 'Milyen vízkezelést képzel el?', options: [['Kézi, klóros vegyszerezés', 'drop'], ['Automata klór- és pH-adagolás', 'sliders'], ['Sós víz (sóbontóval)', 'cube']] },
+    { key: 'comfort', label: 'Gépészet', kind: 'multi', group: 'comfort', q: 'Milyen gépészeti kiegészítőkre lenne szüksége?', skip: 'Nincs szükségem kiegészítőkre' },
+    { key: 'fun', label: 'Élményelemek', kind: 'multi', group: 'fun', q: 'Szeretne élményelemeket?', skip: 'Nincs szükségem élményelemekre' },
+    { key: 'cover', label: 'Takarás', kind: 'multi', group: 'cover', q: 'Hogyan védené a medencét?', skip: 'Egyelőre nem kérek takarást' }
   ];
   resultLabel = 'Becslés és ajánlat';
 
-  // Tájékoztató árelemek (M Ft) — a végleges árakat a cég adja meg.
+  // Tájékoztató tételsávok (M Ft). Helyőrző értékek — a végleges árakat a cég adja meg.
   extraOptions = [
-    { id: 'heat', label: 'Hőszivattyús fűtés', icon: 'thermo', lo: 0.8, hi: 1.5 },
-    { id: 'led', label: 'LED világítás', icon: 'bulb', lo: 0.3, hi: 0.6 },
-    { id: 'counter', label: 'Ellenáramoltató', icon: 'waves', lo: 0.8, hi: 1.5 },
-    { id: 'hydro', label: 'Hidromasszázs', icon: 'bubbles', lo: 0.6, hi: 1.2 }
+    { id: 'heat', group: 'comfort', label: 'Hőszivattyús fűtés', icon: 'thermo', lo: 0.5, hi: 1.3 },
+    { id: 'led', group: 'comfort', label: 'Medencevilágítás (LED)', icon: 'bulb', lo: 0.2, hi: 0.6 },
+    { id: 'uvc', group: 'comfort', label: 'UV-C víztisztító', icon: 'uvc', lo: 0.15, hi: 0.25 },
+    { id: 'robot', group: 'comfort', label: 'Porszívórobot', icon: 'robot', lo: 0.2, hi: 0.5 },
+    { id: 'counter', group: 'fun', label: 'Ellenáramoltató', icon: 'waves', lo: 0.45, hi: 0.65 },
+    { id: 'spout', group: 'fun', label: 'Vízköpő', icon: 'tap', lo: 0.4, hi: 0.6 },
+    { id: 'hydro', group: 'fun', label: 'Hidromasszázs sarok', icon: 'bubbles', lo: 0.4, hi: 0.55 },
+    { id: 'bubble', group: 'fun', label: 'Pezsgőlap', icon: 'fizz', lo: 0.35, hi: 0.45 },
+    { id: 'solar', group: 'cover', label: 'Solar fólia', icon: 'sun', lo: 0.06, hi: 0.18 },
+    { id: 'winter', group: 'cover', label: 'Téli takaró', icon: 'snow', lo: 0.1, hi: 0.25 },
+    { id: 'safety', group: 'cover', label: 'Biztonsági takaró', icon: 'shield', lo: 0.6, hi: 0.9 },
+    { id: 'poly', group: 'cover', label: 'Polikarbonát fedés', icon: 'dome', lo: 1.7, hi: 2.6 }
   ];
+  treatmentAdd = { 'Automata klór- és pH-adagolás': [0.4, 0.5], 'Sós víz (sóbontóval)': [0.65, 0.85] };
 
   // Nem teljes lista: a kiszállási körzetben (kb. 100 km Baja körül) lévő települések.
   serviceTowns = ['Baja', 'Bátaszék', 'Mohács', 'Szekszárd', 'Paks', 'Kalocsa', 'Kiskunhalas', 'Kecskemét', 'Szeged', 'Pécs', 'Soltvadkert', 'Dunaföldvár', 'Bácsalmás', 'Jánoshalma', 'Kiskőrös', 'Hajós', 'Gara', 'Sükösd', 'Dunaszekcső', 'Bonyhád', 'Tolna', 'Dombóvár', 'Mélykút', 'Tompa', 'Szeremle', 'Érsekcsanád', 'Decs', 'Kecel', 'Császártöltés', 'Madaras', 'Katymár', 'Vaskút', 'Nagybaracska', 'Bátmonostor', 'Foktő', 'Ordas', 'Szakmár'];
@@ -1071,7 +1098,18 @@ class Component extends DCLogic {
       thermo: '<path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z"/>',
       bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
       waves: '<path d="M3 9c3-3 6 3 9 0s6 3 9 0"/><path d="M3 15c3-3 6 3 9 0s6 3 9 0"/>',
-      bubbles: '<circle cx="8" cy="15" r="2.5"/><circle cx="16" cy="17" r="1.8"/><circle cx="13" cy="8" r="3"/><circle cx="19" cy="12" r="1.2"/>'
+      bubbles: '<circle cx="8" cy="15" r="2.5"/><circle cx="16" cy="17" r="1.8"/><circle cx="13" cy="8" r="3"/><circle cx="19" cy="12" r="1.2"/>',
+      layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+      box: '<rect x="3" y="8" width="18" height="11" rx="3"/><path d="M7 13c2-2 4 2 6 0s3-1 4 0"/>',
+      help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/>',
+      uvc: '<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+      robot: '<rect x="4" y="9" width="16" height="9" rx="3"/><circle cx="9" cy="13.5" r="1.2"/><circle cx="15" cy="13.5" r="1.2"/><path d="M12 9V5M10 5h4"/>',
+      tap: '<path d="M4 8h8a4 4 0 0 1 4 4v1"/><path d="M4 6v4"/><path d="M16 17v3M14 20h4"/>',
+      fizz: '<circle cx="6" cy="18" r="1.5"/><circle cx="11" cy="14" r="1.8"/><circle cx="16" cy="17" r="1.3"/><circle cx="13" cy="8" r="2"/><circle cx="18" cy="11" r="1"/>',
+      sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>',
+      snow: '<path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11"/>',
+      shield: '<path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/>',
+      dome: '<path d="M3 18h18"/><path d="M4 18a8 8 0 0 1 16 0"/>'
     };
     const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + (paths[name] || '') + '</svg>';
     return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
@@ -1149,15 +1187,54 @@ class Component extends DCLogic {
     const cur = this.state.extras;
     this.setState({ extras: cur.includes(id) ? cur.filter(x => x !== id) : [...cur, id] });
   }
-  noExtras() { this.setState({ extras: [], step: this.state.step + 1 }); this.remeasureSoon(); }
-  resetConfigurator() { this.setState({ step: 0, answers: {}, extras: [], sizeW: '', sizeL: '', sizeD: '', contactStage: 'summary', contactName: '', contactPhone: '', contactEmail: '', contactZip: '', contactTown: '' }); this.remeasureSoon(); }
+  noExtras() {
+    const g = this.steps[this.state.step].group;
+    const ids = this.extraOptions.filter(e => e.group === g).map(e => e.id);
+    this.setState({ extras: this.state.extras.filter(x => !ids.includes(x)), step: this.state.step + 1 });
+    this.remeasureSoon();
+  }
+  resetConfigurator() { this.setState({ step: 0, answers: {}, extras: [], sizeW: '', sizeL: '', sizeD: '', contactStage: 'summary', contactName: '', contactPhone: '', contactEmail: '', contactZip: '', contactTown: '', contactNote: '', copied: false }); this.remeasureSoon(); }
   toggleFaq(i) { this.setState({ faqOpen: this.state.faqOpen === i ? -1 : i }); }
   openContactForm() { this.setState({ contactStage: 'form' }); this.remeasureSoon(); }
   closeContactForm() { this.setState({ contactStage: 'summary' }); this.remeasureSoon(); }
   submitContactForm() {
     if (!this.state.contactName.trim() || (!this.state.contactPhone.trim() && !this.state.contactEmail.trim())) return;
-    this.setState({ contactStage: 'submitted' });
+    this.setState({ contactStage: 'submitted', copied: false });
     this.remeasureSoon();
+    try { window.location.href = this.mailtoHref(); } catch (e) { /* a vázlat a következő képernyőn kézzel is megnyitható */ }
+  }
+  copySummary() {
+    const done = () => this.setState({ copied: true });
+    try { navigator.clipboard.writeText(this.summaryText()).then(done, () => {}); } catch (e) { /* a szöveg kijelölhető és kimásolható */ }
+  }
+  mailtoHref() {
+    const subject = 'Ajánlatkérés — ' + this.state.contactName.trim();
+    return 'mailto:illaitalia2021@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(this.summaryText().replace(/\n/g, '\r\n'));
+  }
+  summaryText() {
+    const s = this.state, a = s.answers, si = this.sizeInfo(), bd = this.breakdown();
+    const pick = g => this.extraOptions.filter(e => e.group === g && s.extras.includes(e.id)).map(e => e.label).join(', ') || '—';
+    const lines = [
+      'Ajánlatkérés az aquailla.hu konfigurátorából',
+      '',
+      'Kapcsolat: ' + s.contactName.trim(),
+      'Telefon: ' + (s.contactPhone.trim() || '—'),
+      'E-mail: ' + (s.contactEmail.trim() || '—'),
+      'Helyszín: ' + ((s.contactZip.trim() + ' ' + s.contactTown.trim()).trim() || '—'),
+      '',
+      'Elhelyezés: ' + (a.location || '—'),
+      'Típus: ' + (a.type || '—'),
+      'Kivitel: ' + (a.build || '—'),
+      'Méret: ' + (si.ok ? this.fmt(si.w) + ' × ' + this.fmt(si.l) + (si.depthOk ? ' × ' + this.fmt(si.d) : '') + ' m — ' + this.fmt(si.area) + ' m², ≈ ' + this.fmt(si.vol) + ' m³ víz' : '—'),
+      'Vízkezelés: ' + (a.treatment || '—'),
+      'Gépészeti kiegészítők: ' + pick('comfort'),
+      'Élményelemek: ' + pick('fun'),
+      'Takarás: ' + pick('cover'),
+      'Megjegyzés: ' + (s.contactNote.trim() || '—'),
+      '',
+      'Tájékoztató sáv a konfigurátorból: ' + this.rng(bd.lo, bd.hi)
+    ];
+    return lines.join('\n');
   }
   remeasureSoon() {
     this.measureCard();
@@ -1165,24 +1242,34 @@ class Component extends DCLogic {
     setTimeout(() => this.measureCard(), 220);
   }
 
-  computeEstimate() {
-    const { location, treatment } = this.state.answers;
-    const area = this.sizeInfo().area || 15;
-    const lerp = (x, x0, x1, y0, y1) => y0 + (y1 - y0) * (x - x0) / (x1 - x0);
-    let low, high;
-    if (area <= 15) { low = 3; high = 5; }
-    else if (area <= 30) { low = lerp(area, 15, 30, 3, 5); high = lerp(area, 15, 30, 5, 8); }
-    else if (area <= 50) { low = lerp(area, 30, 50, 5, 8); high = lerp(area, 30, 50, 8, 12); }
-    else { low = 8 + (area - 50) * 0.15; high = 12 + (area - 50) * 0.2; }
-    if (location === 'Beltérben') { low += 1; high += 1; }
-    if (treatment === 'Automata, minimális vegyszerrel') { low += 0.5; high += 1; }
-    for (const e of this.extraOptions) if (this.state.extras.includes(e.id)) { low += e.lo; high += e.hi; }
-    const r = n => Math.round(n * 2) / 2;
-    return this.fmt(r(low)) + '–' + this.fmt(r(high)) + ' M Ft';
+  rng(lo, hi) {
+    if (hi < 1) return Math.round(lo * 100) * 10 + '–' + Math.round(hi * 100) * 10 + ' e Ft';
+    return this.fmt(lo) + '–' + this.fmt(hi) + ' M Ft';
   }
 
+  breakdown() {
+    const { location, treatment } = this.state.answers;
+    const si = this.sizeInfo();
+    const area = si.area || 15;
+    const lerp = (x, x0, x1, y0, y1) => y0 + (y1 - y0) * (x - x0) / (x1 - x0);
+    let lo, hi;
+    if (area <= 15) { lo = 3; hi = 5; }
+    else if (area <= 30) { lo = lerp(area, 15, 30, 3, 5); hi = lerp(area, 15, 30, 5, 8); }
+    else if (area <= 50) { lo = lerp(area, 30, 50, 5, 8); hi = lerp(area, 30, 50, 8, 12); }
+    else { lo = 8 + (area - 50) * 0.15; hi = 12 + (area - 50) * 0.2; }
+    if (location === 'Beltérben') { lo += 1; hi += 1; }
+    const items = [{ label: 'Medence és kivitelezés' + (si.ok ? ' (' + this.fmt(si.w) + ' × ' + this.fmt(si.l) + ' m)' : ''), lo, hi }];
+    const ta = this.treatmentAdd[treatment];
+    if (ta) items.push({ label: treatment, lo: ta[0], hi: ta[1] });
+    for (const e of this.extraOptions) if (this.state.extras.includes(e.id)) items.push({ label: e.label, lo: e.lo, hi: e.hi });
+    const r = n => Math.round(n * 10) / 10;
+    return { items, lo: r(items.reduce((s, i) => s + i.lo, 0)), hi: r(items.reduce((s, i) => s + i.hi, 0)) };
+  }
+
+  computeEstimate() { const b = this.breakdown(); return this.rng(b.lo, b.hi); }
+
   renderVals() {
-    const { scrolled, windowWidth, activeSection, faqOpen, step, answers, contactStage, contactName, contactPhone, contactEmail, contactZip, contactTown, extras, sizeW, sizeL, sizeD, theme } = this.state;
+    const { scrolled, windowWidth, activeSection, faqOpen, step, answers, contactStage, contactName, contactPhone, contactEmail, contactZip, contactTown, contactNote, copied, extras, sizeW, sizeL, sizeD, theme } = this.state;
     const isResultStep = step >= this.steps.length;
     const q = !isResultStep ? this.steps[step] : null;
     const accent = theme === 'dark' ? '#5B9CFF' : '#146EFF';
@@ -1225,7 +1312,8 @@ class Component extends DCLogic {
       isResultStep,
       isChoiceStep: !!q && q.kind === 'choice',
       isSizeStep: !!q && q.kind === 'size',
-      isExtrasStep: !!q && q.kind === 'extras',
+      isExtrasStep: !!q && q.kind === 'multi',
+      skipLabel: q && q.skip ? q.skip : '',
       showStepRail,
       configCols: showStepRail ? '210px minmax(0,1fr)' : 'minmax(0,1fr)',
       stepRail: this.steps.map((s, i) => ({ label: s.label, idx: i })).concat([{ label: this.resultLabel, idx: this.steps.length }]).map(s => {
@@ -1264,7 +1352,7 @@ class Component extends DCLogic {
       sizeNextDisabled: !si.ok,
       sizeNextOpacity: si.ok ? '1' : '0.45',
       nextStep: () => this.nextStep(),
-      extraCards: this.extraOptions.map(e => {
+      extraCards: this.extraOptions.filter(e => q && e.group === q.group).map(e => {
         const on = extras.includes(e.id);
         return {
           label: e.label,
@@ -1278,10 +1366,14 @@ class Component extends DCLogic {
         };
       }),
       noExtras: () => this.noExtras(),
-      extrasNextLabel: extras.length ? 'Tovább (' + extras.length + ' kiválasztva)' : 'Tovább',
-      summaryChips: isResultStep ? [answers.location, answers.type, si.ok ? this.fmt(si.w) + ' × ' + this.fmt(si.l) + ' m (' + this.fmt(si.area) + ' m²)' : null, answers.treatment]
-        .concat(this.extraOptions.filter(e => extras.includes(e.id)).map(e => e.label))
-        .filter(Boolean).map(text => ({ text })) : [],
+      extrasNextLabel: (() => { const n = this.extraOptions.filter(e => q && e.group === q.group && extras.includes(e.id)).length; return n ? 'Tovább (' + n + ' kiválasztva)' : 'Tovább'; })(),
+      lineItems: isResultStep ? this.breakdown().items.map(i => ({ label: i.label, range: this.rng(i.lo, i.hi) })) : [],
+      contactNote,
+      onNoteChange: e => this.setState({ contactNote: e.target.value }),
+      mailtoHref: contactStage === 'submitted' ? this.mailtoHref() : '#',
+      summaryText: contactStage === 'submitted' ? this.summaryText() : '',
+      copyLabel: copied ? 'Kimásolva ✓' : 'Összefoglaló másolása',
+      copySummary: () => this.copySummary(),
       contactZip,
       contactTown,
       onZipChange: e => this.setState({ contactZip: e.target.value }),
