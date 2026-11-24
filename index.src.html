@@ -865,12 +865,25 @@
           <div style="background: var(--surface); border-radius: 24px; border: 1px solid rgba(91,156,255,0.3); box-shadow: 0 30px 70px rgba(0,0,0,0.5), 0 0 50px rgba(91,156,255,0.1); padding: 40px; display: flex; flex-direction: column;">
             <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 6px;">Írjon nekünk</div>
             <div style="font-size: 13.5px; color: var(--muted); margin-bottom: 26px;">Néhány sorban vázolja a projektet — visszajelzünk, mielőtt időpontot egyeztetnénk.</div>
-            <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; flex: 1;">
-              <input placeholder="Név" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.15s ease;" style-focus="border-color:var(--accent)">
-              <input placeholder="E-mail" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.15s ease;" style-focus="border-color:var(--accent)">
-              <textarea placeholder="Üzenet" rows="4" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; resize: none; flex: 1; transition: border-color 0.15s ease;" style-focus="border-color:var(--accent)"></textarea>
-            </div>
-            <button style="width: 100%; background: var(--accent); color: #0B0B0C; border: none; font-weight: 700; font-size: 15px; padding: 15px 22px; border-radius: 999px; cursor: pointer; box-shadow: 0 0 30px rgba(91,156,255,0.3);" style-hover="background:var(--accent-strong);transform:translateY(-1px)">Elküldöm</button>
+            <sc-if value="{{ msgShowForm }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px; flex: 1;">
+                <input value="{{ msgName }}" sc-camel-on-change="{{ onMsgName }}" placeholder="Név" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.15s ease;" style-focus="border-color:var(--accent)">
+                <input value="{{ msgEmail }}" sc-camel-on-change="{{ onMsgEmail }}" placeholder="E-mail" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.15s ease;" style-focus="border-color:var(--accent)">
+                <textarea value="{{ msgText }}" sc-camel-on-change="{{ onMsgText }}" placeholder="Üzenet" rows="4" style="background: rgba(245,245,242,0.04); border: 1.5px solid var(--border); border-radius: 12px; padding: 15px 18px; color: var(--ink); font-size: 14.5px; font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.15s ease; resize: none; flex: 1;" style-focus="border-color:var(--accent)"></textarea>
+              </div>
+              <sc-if value="{{ msgHasError }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size: 13px; line-height: 1.5; color: #E5726F; margin-bottom: 14px;">{{ msgError }}</div>
+              </sc-if>
+              <button sc-camel-on-click="{{ submitMessage }}" disabled="{{ msgBtnDisabled }}" style="width: 100%; background: var(--accent); color: #0B0B0C; border: none; font-weight: 700; font-size: 15px; padding: 15px 22px; border-radius: 999px; cursor: pointer; box-shadow: 0 0 30px rgba(91,156,255,0.3);" style-hover="background:var(--accent-strong);transform:translateY(-1px)">{{ msgBtnLabel }}</button>
+            </sc-if>
+            <sc-if value="{{ msgSent }}" hint-placeholder-val="{{ false }}">
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px 0; animation: expandIn 0.4s ease both;">
+                <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(91,156,255,0.12); border: 2px solid #5B9CFF; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; font-size: 24px; color: var(--accent); animation: successPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;">✓</div>
+                <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 8px;">Köszönjük az üzenetét!</div>
+                <div style="font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 22px;">Hamarosan válaszolunk a megadott e-mail-címen.</div>
+                <button sc-camel-on-click="{{ resetMessage }}" style="background: none; border: 1px solid var(--border); color: var(--ink); font-size: 14px; padding: 12px 20px; border-radius: 999px; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;">Új üzenet</button>
+              </div>
+            </sc-if>
           </div>
 
           <div style="background: var(--surface); border-radius: 24px; border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 18px;">
@@ -1003,6 +1016,11 @@ class Component extends DCLogic {
     contactNote: '',
     copied: false,
     sendError: false,
+    msgName: '',
+    msgEmail: '',
+    msgText: '',
+    msgStage: 'idle',
+    msgErr: '',
     extras: [],
     sizeW: '',
     sizeL: '',
@@ -1246,6 +1264,26 @@ class Component extends DCLogic {
       this.remeasureSoon();
     });
   }
+  submitMessage() {
+    const s = this.state;
+    if (s.msgStage === 'sending') return;
+    const email = s.msgEmail.trim();
+    if (!s.msgName.trim() || !/^\S+@\S+\.\S+$/.test(email) || s.msgText.trim().length < 5) {
+      this.setState({ msgErr: 'Kérjük, adja meg a nevét, egy érvényes e-mail-címet és az üzenetet.', msgStage: 'idle' });
+      return;
+    }
+    this.setState({ msgStage: 'sending', msgErr: '' });
+    fetch('https://formspree.io/f/' + this.formspreeId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ _subject: 'Üzenet az oldalról — ' + s.msgName.trim(), name: s.msgName.trim(), email, message: s.msgText.trim(), _gotcha: '' })
+    }).then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      this.setState({ msgStage: 'sent', msgName: '', msgEmail: '', msgText: '' });
+    }).catch(() => {
+      this.setState({ msgStage: 'idle', msgErr: 'Az üzenetet most nem sikerült elküldeni. Kérjük, írjon közvetlenül az illaitalia2021@gmail.com címre.' });
+    });
+  }
   copySummary() {
     const done = () => this.setState({ copied: true });
     try { navigator.clipboard.writeText(this.summaryText()).then(done, () => {}); } catch (e) { /* a szöveg kijelölhető és kimásolható */ }
@@ -1415,6 +1453,20 @@ class Component extends DCLogic {
       onNoteChange: e => this.setState({ contactNote: e.target.value }),
       mailtoHref: contactStage === 'submitted' ? this.mailtoHref() : '#',
       summaryText: contactStage === 'submitted' ? this.summaryText() : '',
+      msgName: this.state.msgName,
+      msgEmail: this.state.msgEmail,
+      msgText: this.state.msgText,
+      onMsgName: e => this.setState({ msgName: e.target.value, msgErr: '' }),
+      onMsgEmail: e => this.setState({ msgEmail: e.target.value, msgErr: '' }),
+      onMsgText: e => this.setState({ msgText: e.target.value, msgErr: '' }),
+      msgShowForm: this.state.msgStage !== 'sent',
+      msgSent: this.state.msgStage === 'sent',
+      msgError: this.state.msgErr,
+      msgHasError: !!this.state.msgErr,
+      msgBtnLabel: this.state.msgStage === 'sending' ? 'Küldés…' : 'Elküldöm',
+      msgBtnDisabled: this.state.msgStage === 'sending',
+      submitMessage: () => this.submitMessage(),
+      resetMessage: () => this.setState({ msgStage: 'idle', msgErr: '' }),
       copyLabel: copied ? 'Kimásolva ✓' : 'Összefoglaló másolása',
       copySummary: () => this.copySummary(),
       contactZip,
